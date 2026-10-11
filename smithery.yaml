@@ -1,0 +1,15 @@
+# Smithery.ai configuration for japan-intel-mcp
+description: "Japanese public intelligence for AI agents — earthquakes, weather warnings, weekly forecasts, typhoons, EDINET filings, postal lookup. All sources free and keyless."
+repositoryUrl: https://github.com/atushi1841/japan-intel-mcp
+iconUrl: https://raw.githubusercontent.com/atushi1841/japan-intel-mcp/master/icon.png
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties: {}
+  commandFunction: |
+    (config) => ({
+      command: 'python',
+      args: ['${__dirname}/server/server.py']
+    })
+exampleConfig: {}
