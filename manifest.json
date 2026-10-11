@@ -2,9 +2,9 @@
   "manifest_version": "0.4",
   "name": "japan-intel-mcp",
   "display_name": "Japan Intel MCP — 日本の公開情報",
-  "version": "0.1.0",
-  "description": "Read-only Japan public intelligence for AI agents: earthquakes, weather warnings, typhoons, and postal lookup. All sources are free and keyless (Japan Meteorological Agency, zipcloud). Every response carries its sources and data_gaps.",
-  "long_description": "Japan Intel MCP exposes Japan's live public information to AI agents through six read-only tools: japan_earthquakes (seismic events with epicenter, magnitude, max intensity, depth), japan_weather_warnings (active weather advisories by prefecture), japan_weather_overview (Japan Meteorological Agency narrative forecasts for 10 major prefectures), japan_typhoons (currently monitored typhoons), japan_postal_lookup (postal code to address in kanji and kana), and japan_watch_summary (a single cross-source snapshot). No API key, no account, no paid subscription. Every tool returns an envelope containing retrieved_at, sources, and data_gaps, so agents never silently lose a data source.",
+  "version": "0.2.0",
+  "description": "Read-only Japan public intelligence for AI agents: earthquakes, weather warnings, weekly forecasts with temperatures, typhoons, EDINET corporate filings, and postal lookup. All sources free and keyless.",
+  "long_description": "Japan Intel MCP exposes Japan's live public information to AI agents through eight read-only tools: japan_earthquakes, japan_weather_warnings, japan_weather_overview, japan_weekly_forecast (temperatures and precipitation probabilities), japan_typhoons, japan_edinet_filings (corporate regulatory disclosures), japan_postal_lookup, and japan_watch_summary. All sources are free and keyless: the Japan Meteorological Agency and EDINET. Every response returns an envelope with retrieved_at, sources, and data_gaps, so agents never silently lose a data source.",
   "author": {
     "name": "Atushi",
     "email": "atushi1841@gmail.com",
@@ -28,32 +28,6 @@
       ]
     }
   },
-  "tools": [
-    {
-      "name": "japan_earthquakes",
-      "description": "Recent earthquakes in and around Japan from the Japan Meteorological Agency (epicenter, magnitude, max intensity, depth)."
-    },
-    {
-      "name": "japan_weather_warnings",
-      "description": "Active weather warnings and advisories by area, from the Japan Meteorological Agency."
-    },
-    {
-      "name": "japan_weather_overview",
-      "description": "Narrative weather overview text for major Japanese prefectures."
-    },
-    {
-      "name": "japan_typhoons",
-      "description": "Typhoons currently monitored by the Japan Meteorological Agency."
-    },
-    {
-      "name": "japan_postal_lookup",
-      "description": "Resolve a Japanese postal code to prefecture, city, and town in kanji and kana."
-    },
-    {
-      "name": "japan_watch_summary",
-      "description": "One-call cross-source snapshot of earthquakes, weather warnings, and typhoons."
-    }
-  ],
   "compatibility": {
     "platforms": [
       "darwin",
@@ -70,6 +44,7 @@
     "weather",
     "typhoon",
     "jma",
+    "edinet",
     "open-data",
     "geospatial"
   ],

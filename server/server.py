@@ -36,6 +36,8 @@ JMA_QUAKE = "https://www.jma.go.jp/bosai/quake/data/list.json"
 JMA_WARNING = "https://www.jma.go.jp/bosai/warning/data/warning/map.json"
 JMA_OVERVIEW = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/{area}.json"
 JMA_TYPHOON = "https://www.jma.go.jp/bosai/typhoon/data/targetTc.json"
+JMA_WEEKLY = "https://www.jma.go.jp/bosai/forecast/data/forecast/{area}.json"
+EDINET = "https://api.edinet-fsa.go.jp/api/v2/documents.json?date={date}&type=2"
 ZIPCLOUD = "https://zipcloud.ibsnet.co.jp/api/search?zipcode={code}"
 
 # 主要都市の予報区コード（気象庁）
@@ -232,6 +234,83 @@ def japan_postal_lookup(zipcode: str) -> dict[str, Any]:
         for r in results
     ]
     return _envelope(out, [ZIPCLOUD.format(code=code)], [])
+
+
+
+@server.tool()
+def japan_weekly_forecast(prefecture: str = "東京都") -> dict[str, Any]:
+    """指定都道府県の週間天気予報（気象庁）を返す。気温・降水確率を含む。
+
+    Args:
+        prefecture: 主要10都道府県のいずれか
+    """
+    code = AREA_CODES.get(prefecture)
+    gaps: list[str] = []
+    if not code:
+        gaps.append(f"{prefecture} は未対応のため東京都の予報区を使用")
+        code = AREA_CODES["東京都"]
+    data, err = _get_json(JMA_WEEKLY.format(area=code), "jma-weekly")
+    if err:
+        return _envelope(None, [JMA_WEEKLY.format(area=code)], [err])
+    # 気象庁の週間予報は系列ごとに地域名・期間・項目が違う:
+    #   series[0].ts[0]=天気/風/波, ts[1]=降水確率, ts[2]=気温(今日)
+    #   series[1].ts[0]=降水確率(週間+信頼度), ts[1]=最高/最低気温(週間)
+    # 地域名が系列間で一致しないため、系列単位で構造化して返す（誤って結合しない）。
+    blocks: list[dict[str, Any]] = []
+    for series in (data or []):
+        reported = series.get("reportDatetime")
+        for ts in series.get("timeSeries", []) or []:
+            times = ts.get("timeDefines") or []
+            entries = []
+            for area in ts.get("areas", []) or []:
+                a = area.get("area") if isinstance(area.get("area"), dict) else None
+                name = (a or {}).get("name") or area.get("areaName")
+                vals = {k: v for k, v in area.items() if k != "area" and v not in (None, [], "")}
+                if name and vals:
+                    entries.append({"area": name, **vals})
+            if entries:
+                blocks.append({"report_datetime": reported, "time_defines": times, "areas": entries[:6]})
+    if not blocks:
+        gaps.append("週間予報の系列を解釈できませんでした")
+    return _envelope({"prefecture": prefecture, "area_code": code, "blocks": blocks[:6]}, [JMA_WEEKLY.format(area=code)], gaps)
+
+
+@server.tool()
+def japan_edinet_filings(date: str = "") -> dict[str, Any]:
+    """日本の上場企業などの法定開示（EDINET）を日付単位で返す。
+
+    Args:
+        date: YYYY-MM-DD。空なら直近の営業日を自動で使う
+    """
+    gaps: list[str] = []
+    if not date:
+        from datetime import date as _date, timedelta
+        d = _date.today()
+        for _ in range(7):
+            if d.weekday() < 5:
+                break
+            d -= timedelta(days=1)
+        date = d.isoformat()
+        gaps.append(f"日付未指定のため {date} を使用")
+    if len(date) != 10 or date[4] != "-":
+        return _envelope(None, [], [f"不正な日付形式: {date}（YYYY-MM-DD）"])
+    url = EDINET.format(date=date)
+    data, err = _get_json(url, "edinet")
+    if err:
+        return _envelope(None, [url], [err])
+    results = (data or {}).get("results") or []
+    out = []
+    for r in results[:100]:
+        out.append({
+            "doc_id": r.get("docID"),
+            "filer": r.get("filerName"),
+            "doc_type": r.get("docTypeCode"),
+            "description": r.get("docDescription"),
+            "submit_datetime": r.get("submitDateTime"),
+        })
+    if not out:
+        gaps.append(f"{date} の開示は0件（休日または未公開）")
+    return _envelope({"date": date, "count": len(out), "filings": out}, [url], gaps)
 
 
 @server.tool()

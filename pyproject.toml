@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "japan-intel-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "Japan public intelligence MCP: earthquakes, weather warnings, typhoons, postal lookup. All sources are free and keyless."
 requires-python = ">=3.11"
 license = "MIT"

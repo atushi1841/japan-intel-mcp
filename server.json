@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.atushi1841/japan-intel-mcp",
+  "description": "Japan public intelligence for AI agents: earthquakes, weather, typhoons, EDINET filings. Keyless.",
+  "version": "0.2.0",
+  "repository": {
+    "url": "https://github.com/atushi1841/japan-intel-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/atushi1841/japan-intel-mcp/releases/download/v0.2.0/japan-intel-mcp.mcpb",
+      "version": "0.2.0",
+      "fileSha256": "4f8085048e6f89a0948e95fa9404ce32adf6d52748bcb04c5425af4f4bf88cf6",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
