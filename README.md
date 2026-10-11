@@ -4,6 +4,15 @@
 
 AIエージェントが「今の日本で何が起きているか」を、**出典付き**で取得できます。
 
+## 入手方法
+
+| 経路 | コマンド / URL |
+|------|----------------|
+| pip | `pip install japan-intel-mcp` |
+| MCPバンドル | [v0.2.0 release](https://github.com/atushi1841/japan-intel-mcp/releases/tag/v0.2.0) の `.mcpb` |
+| 公式レジストリ | `io.github.atushi1841/japan-intel-mcp` |
+| Apify | `fruitful_quintessence/japan-intel-mcp`（Standby MCP・準備中） |
+
 ## Tools
 
 | Tool | 内容 | データ源 |
@@ -11,7 +20,9 @@ AIエージェントが「今の日本で何が起きているか」を、**出�
 | `japan_earthquakes(min_magnitude, min_intensity, limit)` | 国内の地震情報（震源・マグニチュード・最大震度・深さ） | 気象庁 |
 | `japan_weather_warnings(area)` | 気象警報・注意報（都道府県で絞り込み可） | 気象庁 |
 | `japan_weather_overview(prefecture)` | 天気概況の文章解説（主要10都道府県） | 気象庁 |
+| `japan_weekly_forecast(prefecture)` | 週間天気予報（**最高/最低気温**・降水確率・信頼度） | 気象庁 |
 | `japan_typhoons()` | 監視中の台風情報 | 気象庁 |
+| `japan_edinet_filings(date)` | 上場企業の**法定開示**（有報・適時開示など） | EDINET |
 | `japan_postal_lookup(zipcode)` | 郵便番号 → 住所（漢字・かな） | zipcloud |
 | `japan_watch_summary(min_magnitude)` | 上記を横断した1回のサマリ | 気象庁 |
 
