@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "japan-intel-mcp"
+version = "0.1.0"
+description = "Japan public intelligence MCP: earthquakes, weather warnings, typhoons, postal lookup. All sources are free and keyless."
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Atushi" }]
+keywords = ["mcp", "japan", "earthquake", "weather", "jma", "open-data"]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
+dependencies = ["mcp>=1.0.0,<2"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+japan-intel-mcp = "japan_intel_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/atushi1841/japan-intel-mcp"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
