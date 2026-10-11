@@ -14,13 +14,17 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
 ]
-dependencies = ["mcp>=1.0.0,<2"]
+dependencies = [
+    "mcp>=1.0.0,<2",
+    "fastmcp>=3.0.0",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 
 [project.scripts]
 japan-intel-mcp = "japan_intel_mcp.server:main"
+japan-intel-mcpb = "stdio_main:main"
 
 [project.urls]
 Homepage = "https://github.com/atushi1841/japan-intel-mcp"
