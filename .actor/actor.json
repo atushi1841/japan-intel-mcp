@@ -1,0 +1,28 @@
+{
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+  "actorSpecification": 1,
+  "name": "japan-intel-mcp",
+  "title": "Japan Intel MCP — Earthquakes, Weather, Typhoons & Corporate Filings",
+  "description": "MCPサーバー — 気象庁の地震・警報・週間予報（気温/降水確率）・台風、EDINETの企業法定開示、郵便番号検索をAIエージェント（Claude, ChatGPT等）からツールとして呼び出せます。全データ源が無料・APIキー不要の8ツール。",
+  "version": "0.2",
+  "buildTag": "latest",
+  "usesStandbyMode": true,
+  "webServerMcpPath": "/mcp",
+  "meta": {
+    "templateId": "python-mcp-apify-actors"
+  },
+  "input": {
+    "title": "Actor input schema",
+    "description": "MCPサーバーはStandbyモードで動作 — 入力はMCPツール呼び出し経由で行われ、Actor入力からは受け取りません。",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {},
+    "required": []
+  },
+  "dockerfile": "../Dockerfile",
+  "categories": [
+    "MCP_SERVERS",
+    "DEVELOPER_TOOLS",
+    "AUTOMATION"
+  ]
+}

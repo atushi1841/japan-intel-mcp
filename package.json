@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "apify-cli": "^1.7.1"
+  }
+}

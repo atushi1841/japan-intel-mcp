@@ -1,0 +1,52 @@
+{
+  "events": [
+    {
+      "eventTitle": "japan-earthquakes",
+      "eventDescription": "Earthquake list with magnitude and intensity",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-weather-warnings",
+      "eventDescription": "Active weather warnings and advisories",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-weather-overview",
+      "eventDescription": "Narrative weather forecast text",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-weekly-forecast",
+      "eventDescription": "Weekly forecast with temperatures and precipitation probability",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-typhoons",
+      "eventDescription": "Monitored typhoon data",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-edinet-filings",
+      "eventDescription": "EDINET corporate regulatory disclosures by date",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-postal-lookup",
+      "eventDescription": "Postal code to Japanese address lookup",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    },
+    {
+      "eventTitle": "japan-watch-summary",
+      "eventDescription": "Cross-source Japan watch summary",
+      "eventPriceUsd": 0.001,
+      "isPrimaryEvent": true
+    }
+  ]
+}
