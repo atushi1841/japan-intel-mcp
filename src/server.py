@@ -384,8 +384,9 @@ def japan_watch_summary(min_magnitude: float = 3.0) -> dict[str, Any]:
 def main() -> None:
     """stdio で MCP サーバーを起動する。
 
-    show_banner=False は必須。バナーは stdout に出るため、stdio トランスポートでは
-    JSON-RPC のストリームを汚染し、クライアントが応答をパースできなくなる。
+    transport を明示するのは、既定が環境によって変わるのを避けるため。
+    show_banner=False は必須ではない（実測: バナーは stderr に出るため stdout は
+    汚染されない）。起動ログのノイズを減らす目的で付けている。
     """
     server.run(transport="stdio", show_banner=False)
 
