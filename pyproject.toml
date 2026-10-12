@@ -4,8 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "japan-intel-mcp"
-version = "0.2.0"
-description = "Japan public intelligence MCP: earthquakes, weather warnings, typhoons, postal lookup. All sources are free and keyless."
+version = "0.2.1"
+description = "Japan public intelligence MCP for AI agents: earthquakes, weather, weekly forecasts, typhoons, EDINET filings, postal lookup. Keyless."
+readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 authors = [{ name = "Atushi" }]
@@ -15,8 +16,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "mcp>=1.0.0,<2",
-    "fastmcp>=3.0.0",
+    "fastmcp>=2.0.0",
+    "httpx>=0.27",
 ]
 
 [project.optional-dependencies]

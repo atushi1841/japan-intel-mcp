@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "japan-intel-mcp",
   "display_name": "Japan Intel MCP — 日本の公開情報",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Read-only Japan public intelligence for AI agents: earthquakes, weather warnings, weekly forecasts with temperatures, typhoons, EDINET corporate filings, and postal lookup. All sources free and keyless.",
   "long_description": "Japan Intel MCP exposes Japan's live public information to AI agents through eight read-only tools: japan_earthquakes, japan_weather_warnings, japan_weather_overview, japan_weekly_forecast (temperatures and precipitation probabilities), japan_typhoons, japan_edinet_filings (corporate regulatory disclosures), japan_postal_lookup, and japan_watch_summary. All sources are free and keyless: the Japan Meteorological Agency and EDINET. Every response returns an envelope with retrieved_at, sources, and data_gaps, so agents never silently lose a data source.",
   "author": {

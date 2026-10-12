@@ -25,7 +25,7 @@ import urllib.request
 from datetime import UTC, datetime
 from typing import Any
 
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 
 server = FastMCP("japan-intel-mcp")
 
