@@ -1,0 +1,83 @@
+name: Publish to PyPI
+
+# PyPI Trusted Publishing（OIDC）を使う。APIトークン不要。
+#
+# 初回のみ必要な設定（ユーザー操作・1回だけ）:
+#   https://pypi.org/manage/account/publishing/ で "pending publisher" を登録
+#     PyPI Project Name : japan-intel-mcp
+#     Owner             : atushi1841
+#     Repository name   : japan-intel-mcp
+#     Workflow name     : publish-pypi.yml
+#     Environment name  : pypi
+#   登録後、このワークフローを手動実行（Actions → Run workflow）すると公開される。
+#
+# 2回目以降は GitHub Release を作成するだけで自動公開される。
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build sdist and wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+
+      - name: Verify the wheel starts as an MCP server
+        run: |
+          python -m pip install dist/*.whl
+          printf '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"probe","version":"1"}}}\n{"jsonrpc":"2.0","method":"notifications/initialized"}\n{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}\n' \
+            | timeout 60 japan-intel-mcp > /tmp/out.txt 2>/dev/null || true
+          cat > /tmp/check.py <<'PY'
+          import json, pathlib
+          lines = [l for l in pathlib.Path("/tmp/out.txt").read_text().splitlines() if l.strip()]
+          ids, tools = set(), 0
+          for line in lines:
+              try:
+                  d = json.loads(line)
+              except Exception:
+                  continue
+              if d.get("id") == 1:
+                  ids.add(1)
+              if d.get("id") == 2:
+                  tools = len((d.get("result") or {}).get("tools") or [])
+                  ids.add(2)
+          assert 1 in ids, "initialize に応答がありません（show_banner=False の回帰）"
+          assert tools >= 8, f"ツール数が不足: {tools}"
+          print(f"OK: initialize応答あり / tools={tools}")
+          PY
+          python /tmp/check.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
