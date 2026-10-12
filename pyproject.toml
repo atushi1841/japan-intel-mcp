@@ -25,7 +25,6 @@ dev = ["pytest>=8.0"]
 
 [project.scripts]
 japan-intel-mcp = "japan_intel_mcp.server:main"
-japan-intel-mcpb = "stdio_main:main"
 
 [project.urls]
 Homepage = "https://github.com/atushi1841/japan-intel-mcp"

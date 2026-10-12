@@ -382,7 +382,12 @@ def japan_watch_summary(min_magnitude: float = 3.0) -> dict[str, Any]:
 
 
 def main() -> None:
-    server.run()
+    """stdio で MCP サーバーを起動する。
+
+    show_banner=False は必須。バナーは stdout に出るため、stdio トランスポートでは
+    JSON-RPC のストリームを汚染し、クライアントが応答をパースできなくなる。
+    """
+    server.run(transport="stdio", show_banner=False)
 
 
 if __name__ == "__main__":
