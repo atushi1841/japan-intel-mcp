@@ -8,7 +8,7 @@ AIエージェントが「今の日本で何が起きているか」を、**出�
 
 | 経路 | コマンド / URL |
 |------|----------------|
-| pip | `pip install japan-intel-mcp` |
+| pip | PyPI公開準備中（未登録）。今すぐ使うなら下段のバンドルかレジストリ経由 |
 | MCPバンドル | [v0.2.0 release](https://github.com/atushi1841/japan-intel-mcp/releases/tag/v0.2.0) の `.mcpb` |
 | 公式レジストリ | `io.github.atushi1841/japan-intel-mcp` |
 | Apify | `fruitful_quintessence/japan-intel-mcp`（Standby MCP・準備中） |
