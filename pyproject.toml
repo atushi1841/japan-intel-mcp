@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "japan-intel-mcp"
-version = "0.2.1"
+version = "0.2.2"
 description = "Japan public intelligence MCP for AI agents: earthquakes, weather, weekly forecasts, typhoons, EDINET filings, postal lookup. Keyless."
 readme = "README.md"
 requires-python = ">=3.11"

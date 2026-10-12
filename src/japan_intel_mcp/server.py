@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import json
+import re
 import urllib.error
 import urllib.request
 from datetime import UTC, datetime
@@ -76,6 +77,32 @@ def _envelope(data: Any, sources: list[str], gaps: list[str]) -> dict[str, Any]:
     }
 
 
+# 気象庁 list.json の cod 例: "+43.2+144.8-80000/" = 緯度 +43.2 / 経度 +144.8 / 深さ 80000m
+_COD_RE = re.compile(r"^([+-]\d+(?:\.\d+)?)([+-]\d+(?:\.\d+)?)([+-]\d+)?/?")
+
+
+def _parse_cod(cod: Any) -> tuple[float | None, float | None, float | None]:
+    """気象庁の cod 文字列を (緯度, 経度, 深さkm) に分解する。
+
+    cod は "±緯度±経度±深さ(メートル)/" の連結形式。深さは上向きが正なので
+    "-80000" は地表から 80km 下を意味する（符号を反転して km に直す）。
+
+    Returns:
+        (lat, lon, depth_km)。解釈できない場合は該当要素が None。
+    """
+    if not isinstance(cod, str) or not cod:
+        return None, None, None
+    m = _COD_RE.match(cod)
+    if not m:
+        return None, None, None
+    lat = float(m.group(1))
+    lon = float(m.group(2))
+    depth_km: float | None = None
+    if m.group(3):
+        depth_km = abs(float(m.group(3))) / 1000.0
+    return lat, lon, depth_km
+
+
 @server.tool()
 def japan_earthquakes(min_magnitude: float = 0.0, min_intensity: str = "", limit: int = 20) -> dict[str, Any]:
     """日本国内の地震情報（気象庁）を新しい順に返す。
@@ -104,15 +131,16 @@ def japan_earthquakes(min_magnitude: float = 0.0, min_intensity: str = "", limit
         # 震度が記録されていないものは国内で観測されなかった海外の地震
         if not mi:
             continue
+        lat, lon, depth_km = _parse_cod(q.get("cod"))
         out.append(
             {
                 "time": q.get("at"),
                 "epicenter": q.get("anm"),
                 "max_intensity": mi or None,
                 "magnitude": mag or None,
-                "depth_km": q.get("dep") or None,
-                "latitude": q.get("lat"),
-                "longitude": q.get("lon"),
+                "depth_km": depth_km,
+                "latitude": lat,
+                "longitude": lon,
                 "source_url": q.get("rjson") or None,
             }
         )
