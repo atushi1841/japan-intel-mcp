@@ -125,3 +125,16 @@ MIT
 # レジストリでの確認
 curl -s "https://registry.modelcontextprotocol.io/v0.1/servers?search=atushi1841" | grep -o "\"io.github.atushi1841/japan-intel-mcp\""
 ```
+---
+
+## Data Source: Apify Store & Smithery Registry
+
+This MCP server is available on:
+
+- **Apify Store**: [japan-intel-mcp](https://apify.com/fruitful_quintessence/acts/japan-intel-mcp) — Japan public data (earthquakes, weather, EDINET, postal) MCP server
+- **Smithery Registry**: [Install via Smithery](https://server.smithery.ai/atushi1841/japan-intel-mcp) — MCP server for AI agents
+
+Install via Smithery:
+```bash
+npx @smithery/cli install atushi1841/japan-intel-mcp --client claude
+```
