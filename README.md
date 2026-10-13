@@ -114,3 +114,14 @@ MIT
 - **無料のみ**: 有料APIキーは一切不要です
 
 ツール一覧は上部の表を参照してください（8ツール）。
+
+## MCP 公式レジストリ登録済み
+
+本サーバーはMCP公式レジストリに登録済みです。
+
+- **Registry**: [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.atushi1841/japan-intel-mcp)
+
+```bash
+# レジストリでの確認
+curl -s "https://registry.modelcontextprotocol.io/v0.1/servers?search=atushi1841" | grep -o "\"io.github.atushi1841/japan-intel-mcp\""
+```
