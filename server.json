@@ -10,9 +10,9 @@
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/atushi1841/japan-intel-mcp/releases/download/v0.2.1/japan-intel-mcp.mcpb",
-      "version": "0.2.1",
-      "fileSha256": "9e37dc514ace3776690141c6013ea4c493e5958e7d51a036e88b8722a80d2e76",
+      "identifier": "https://github.com/atushi1841/japan-intel-mcp/releases/download/v0.2.2/server.mcpb",
+      "version": "0.2.2",
+      "fileSha256": "4f3a30c87e62d92d9853324ac4c3ff8b13814cb9f54d619d11eef86535f75909",
       "transport": {
         "type": "stdio"
       }
